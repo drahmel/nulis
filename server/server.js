@@ -1,19 +1,21 @@
-import Express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser'; // Parse requests, turn them into json
-import morgan from 'morgan'; // A logging framework, terminal output for debugging.
-import mongoose from 'mongoose'; // ORM between mongo and node.
-import cors from 'cors'; // Cors allows requests from different domains
-import path from 'path'; // manipulate filepaths
-import util from 'util';
+const Express = require('express');
+const http = require('http');
+const bodyParser = require('body-parser'); // Parse requests, turn them into json
+const morgan = require('morgan'); // A logging framework, terminal output for debugging.
+const mongoose = require('mongoose'); // ORM between mongo and node.
+const cors = require('cors'); // Cors allows requests = require(different domains
+const path = require('path'); // manipulate filepaths
+const util = require('util');
 
 
 /* Routes */
-import profilesRoutes from './routes/profiles.routes.js';
-import treesRoutes from './routes/trees.routes.js';
+const profilesRoutes = require('./routes/profiles.routes.js');
+const treesRoutes = require('./routes/trees.routes.js');
 
 /* Controllers */
-import * as treeControllers from './controllers/tree.controllers';
+const treeControllers = require('./controllers/tree.controllers');
+const get_prompts = require('./misc/hotprompts');
+const fs = require('fs');
 
 
 // Connect to db.
@@ -53,7 +55,6 @@ server.get('/bundle.js',(req,res) => {
 server.use('/static',
 	   Express.static(path.resolve(__dirname, './static')));
 // index page
-import fs from 'fs';
 server.get('/top-writingprompts-authors', function(req, res) {
     var top_authors = JSON.parse(fs.readFileSync('./misc/top_authors_week.json','utf8'));
     res.render('leaderboard', {authors: top_authors, timeframe:'week', loc:'authors'});
@@ -67,11 +68,11 @@ server.get('/top-writingprompts-authors/alltime', function(req, res) {
 var mcache = require('memory-cache');
 var cache = (duration) => {
     return (req, res, next) => {
-	let key = '__express__' + req.originalUrl || req.url
-	let cachedBody = mcache.get(key)
+	var key = '__express__' + req.originalUrl || req.url;
+	var cachedBody = mcache.get(key);
 	if (cachedBody) {
-	    res.send(cachedBody)
-	    return
+	    res.send(cachedBody);
+	    return;
 	} else {
 	    res.sendResponse = res.send
 	    res.send = (body) => {
@@ -83,7 +84,6 @@ var cache = (duration) => {
     }
 }
 
-import get_prompts from './misc/hotprompts';
 /* 5*60 */
 server.get('/prompts', cache(5*60), function(req, res) { 
     /* var prompts = JSON.parse(fs.readFileSync('./misc/hotprompts.json', 'utf8'));*/
@@ -111,4 +111,4 @@ server.listen(port, (error) => {
     }
 });
 
-export default server;
+//export default server;
