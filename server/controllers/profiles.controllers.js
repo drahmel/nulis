@@ -11,7 +11,7 @@ function tokenForUser(user){
 }
 
 //sign in view
-export function signin(req, res, next) {
+ function signin(req, res, next) {
     // email/pass is already checked, here I just give user a token.
     // passport has already atteched user object to the request
     console.log("Email/Pass is correct, returning token.");
@@ -26,7 +26,7 @@ export function signin(req, res, next) {
     });
 }
 
-export function signup(req, res, next) {
+function signup(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;    
     const referral = req.body.referral;
@@ -92,7 +92,7 @@ export function signup(req, res, next) {
 }
 
 
-export function getUser(req, res) {
+function getUser(req, res) {
     const email = req.user.email;
     console.log("Get user. " + email);
     // Search for a user with a given email
@@ -129,7 +129,7 @@ export function getUser(req, res) {
 
 
 /* Stripe payment */
-export function payment(req, res) {
+function payment(req, res) {
     console.log("Payment!");
 
     // Set your secret key: remember to change this to your live secret key in production
@@ -187,7 +187,7 @@ export function payment(req, res) {
 }
 
 /* Paypal payment */
-export function paypal_payment(req, res) {
+ function paypal_payment(req, res) {
     console.log("Paypal Payment!");
     // Grabbing user email from paypal's payment notification
     // (I've submitted email via form)
@@ -208,7 +208,7 @@ export function paypal_payment(req, res) {
 }
 
 
-export function updateWordcount(req, res) {
+ function updateWordcount(req, res) {
     const today = req.body;
     User.findOne({email:req.user.email}, function(err, user){
 	if (err) { return next(err); }
