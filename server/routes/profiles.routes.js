@@ -1,4 +1,5 @@
-import { Router } from 'express';
+const Express =  require('express');
+const Router = Express.Router;
 const router = new Router();
 
 const passport = require('passport');
@@ -25,5 +26,5 @@ router.route('/purchase/:email').post(profilesControllers.paypal_payment);
 router.route('/update-wordcount').post(requireAuth, profilesControllers.updateWordcount);
 
 
-export default router;
+module.exports = router;
 

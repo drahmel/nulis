@@ -1,8 +1,10 @@
 /* Mongoose is ORM, like models.py in django */
-import mongoose, {Schema} from 'mongoose';
-import validator from 'validator';
-import bcrypt from 'bcrypt-nodejs';
-import cuid from 'cuid';
+const mongoose =  require('mongoose');
+const Schema = mongoose.Schema;
+const validator =  require('validator');
+const bcrypt =  require('bcrypt');
+const cuid =  require('cuid');
+
 
 // Define model. 
 const userSchema = new Schema({
